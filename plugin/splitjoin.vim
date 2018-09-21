@@ -70,10 +70,12 @@ function! s:Split()
 
   if !sj#settings#Read('quiet') | echo "Splitjoin: Working..." | endif
   for callback in b:splitjoin_split_callbacks
+    echomsg "Trying to split with callback: ".callback
     try
       call sj#PushCursor()
 
       if call(callback, [])
+        echomsg "Splitting with callback: ".callback
         silent! call repeat#set("\<plug>SplitjoinSplit")
         let &whichwrap = saved_whichwrap
         if !sj#settings#Read('quiet')
